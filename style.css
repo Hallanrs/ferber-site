@@ -421,6 +421,7 @@ section:not(:first-child) {
 #detalhes-solucao p {
   font-size: 1.1rem;
 }
+
     /* Parcerias */
     .parcerias-container {
       text-align: center;
