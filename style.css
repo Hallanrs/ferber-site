@@ -408,6 +408,19 @@ section:not(:first-child) {
       color: #cc5500;
     }
 
+    #detalhes-solucao {
+  margin-top: 3rem;
+  border-top: 2px solid #eee;
+}
+
+#detalhes-solucao h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+#detalhes-solucao p {
+  font-size: 1.1rem;
+}
     /* Parcerias */
     .parcerias-container {
       text-align: center;
