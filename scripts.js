@@ -76,6 +76,3 @@ if (linkParcerias) {
     ativarAba("certificacoes");
   });
 }
-
-
-
