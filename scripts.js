@@ -1,166 +1,160 @@
-document.addEventListener("DOMContentLoaded", () => {
-  // Seleciona todos os itens de navegação e seções
+// Espera o DOM carregar para garantir que todos os elementos estejam disponíveis
+document.addEventListener("DOMContentLoaded", function () {
+  // Seleciona os elementos principais do menu e seções
   const navItems = document.querySelectorAll(".nav-item");
-  const sections = document.querySelectorAll("main section");
-  
-  // Define a função para ativar uma aba específica
-  function ativarAba(id) {
-    // Remove "active" de todos os itens de navegação e seções
+  const sections = document.querySelectorAll("section");
+  const botoesSaibaMais = document.querySelectorAll(".btn-saiba-mais");
+  const botoesVoltar = document.querySelectorAll(".btn-voltar");
+
+  // Função para ativar uma aba principal (ex: Inicio, Sobre, Soluções, etc.)
+  function ativarAba(tabId) {
+    // Remove classe 'active' de todos os itens do menu
     navItems.forEach(i => i.classList.remove("active"));
-    sections.forEach(s => s.classList.remove("active"));
-    
-    // Encontra o item de navegação correspondente ao id
-    const navItem = [...navItems].find(item => item.dataset.tab === id);
-    const section = document.getElementById(id);
-    
-    // Adiciona "active" ao item de navegação e seção corretos
-    if (navItem) navItem.classList.add("active");
-    if (section) section.classList.add("active");
+
+    // Ativa a aba clicada
+    const itemAtivo = document.querySelector(`.nav-item[data-tab="${tabId}"]`);
+    if (itemAtivo) itemAtivo.classList.add("active");
+
+    // Esconde todas as seções
+    sections.forEach(sec => sec.style.display = "none");
+
+    // Mostra a seção desejada
+    const targetSection = document.getElementById(tabId);
+    if (targetSection) targetSection.style.display = "block";
+
+    // Oculta soluções detalhadas se alguma estiver aberta
+    document.querySelectorAll(".detalhe-solucao").forEach(sol => sol.style.display = "none");
   }
-  
-  // Adiciona event listeners para os itens de navegação principal
+
+  // Alternância entre abas principais ao clicar no menu
   navItems.forEach(item => {
     item.addEventListener("click", () => {
-      ativarAba(item.dataset.tab);
+      const tab = item.getAttribute("data-tab");
+      ativarAba(tab);
     });
   });
-  
-  // Botão "Soluções" na página inicial
+
+  // Botões "Saiba mais" abrem detalhes de cada solução específica
+  botoesSaibaMais.forEach(botao => {
+    botao.addEventListener("click", e => {
+      e.preventDefault();
+      const target = document.querySelector(botao.getAttribute("href"));
+
+      if (target) {
+        // Esconde seções principais
+        sections.forEach(sec => sec.style.display = "none");
+        // Mostra o conteúdo detalhado da solução
+        target.style.display = "block";
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    });
+  });
+
+  // Botões "Voltar" retornam à seção principal de soluções
+  botoesVoltar.forEach(botao => {
+    botao.addEventListener("click", () => {
+      // Esconde todas as seções
+      sections.forEach(sec => sec.style.display = "none");
+      // Exibe novamente a seção de soluções
+      const solucoesSection = document.getElementById("solucoes");
+      if (solucoesSection) solucoesSection.style.display = "block";
+      window.scrollTo({ top: solucoesSection.offsetTop, behavior: "smooth" });
+    });
+  });
+
+  // Botões que levam a seções específicas (usados dentro do conteúdo)
   const linkSolucoes = document.getElementById("link-solucoes");
   if (linkSolucoes) {
     linkSolucoes.addEventListener("click", (e) => {
-      e.preventDefault(); // Impede o comportamento padrão da âncora
+      e.preventDefault();
       ativarAba("solucoes");
     });
   }
-  
-  // Botão "Ver Parcerias Completas" na seção de certificações
+
   const linkParcerias = document.getElementById("link-parcerias");
   if (linkParcerias) {
     linkParcerias.addEventListener("click", (e) => {
-      e.preventDefault(); // Impede o comportamento padrão da âncora
+      e.preventDefault();
       ativarAba("parcerias");
     });
   }
-  
-  // Botão "Entre em Contato" na seção de parcerias
+
   const linkContato = document.querySelector(".parcerias-container .btn-primary");
   if (linkContato) {
     linkContato.addEventListener("click", (e) => {
-      e.preventDefault(); // Impede o comportamento padrão da âncora
+      e.preventDefault();
       ativarAba("contato");
     });
   }
-  
-  // Manipulador para o upload de arquivo
+
+  // Manipula o upload de arquivos no formulário de contato
   const fileInput = document.querySelector('.file-input');
   const fileLabel = document.querySelector('.file-input-label');
-  
   if (fileInput && fileLabel) {
-    fileInput.addEventListener('change', function() {
-      if (fileInput.files.length > 0) {
-        fileLabel.textContent = fileInput.files[0].name;
-      } else {
-        fileLabel.textContent = 'Escolher arquivo';
-      }
+    fileInput.addEventListener('change', function () {
+      fileLabel.textContent = fileInput.files.length > 0
+        ? fileInput.files[0].name
+        : 'Escolher arquivo';
     });
   }
-  
-  // Menu mobile toggle
+
+  // Comportamento do menu mobile
   const mobileMenu = document.getElementById("mobile-menu");
   const navList = document.getElementById("nav-list");
-  
   if (mobileMenu && navList) {
     mobileMenu.addEventListener("click", () => {
       navList.classList.toggle("active");
       mobileMenu.classList.toggle("active");
     });
   }
+
+  // Carrossel de imagens com rolagem horizontal
+  const carousel = document.getElementById('carousel');
+  const prevBtn = document.getElementById('prev');
+  const nextBtn = document.getElementById('next');
+  const slides = document.querySelectorAll('.carousel-slide');
+  let slideWidth = slides[0]?.offsetWidth + 20 || 200;
+  let slidesVisible = 6;
+  let currentIndex = 0;
+
+  function updateSlidesVisible() {
+    if (window.innerWidth > 1200) {
+      slidesVisible = 6;
+    } else if (window.innerWidth > 992) {
+      slidesVisible = 4;
+    } else if (window.innerWidth > 768) {
+      slidesVisible = 3;
+    } else if (window.innerWidth > 480) {
+      slidesVisible = 2;
+    } else {
+      slidesVisible = 1;
+    }
+    slideWidth = slides[0]?.offsetWidth + 20 || 200;
+  }
+
+  function slide(direction) {
+    updateSlidesVisible();
+    if (direction === 'next') {
+      currentIndex++;
+      if (currentIndex > slides.length - slidesVisible) {
+        currentIndex = 0;
+      }
+    } else {
+      currentIndex--;
+      if (currentIndex < 0) {
+        currentIndex = slides.length - slidesVisible;
+      }
+    }
+    carousel.scrollLeft = currentIndex * slideWidth;
+  }
+
+  if (carousel && prevBtn && nextBtn) {
+    prevBtn.addEventListener('click', () => slide('prev'));
+    nextBtn.addEventListener('click', () => slide('next'));
+    window.addEventListener('resize', updateSlidesVisible);
+    updateSlidesVisible();
+  }
+
+  // Exibe a aba "Início" por padrão ao carregar a página
+  ativarAba("inicio");
 });
-
-
-  document.addEventListener("DOMContentLoaded", function () {
-    const botoesSaibaMais = document.querySelectorAll(".btn-saiba-mais");
-    const botoesVoltar = document.querySelectorAll(".btn-voltar");
-    const solucoesSection = document.getElementById("solucoes");
-    const abas = document.querySelectorAll(".aba-conteudo");
-
-    botoesSaibaMais.forEach(botao => {
-      botao.addEventListener("click", function (e) {
-        e.preventDefault();
-        const alvoID = this.getAttribute("href").substring(1);
-
-        solucoesSection.classList.add("oculta");
-        abas.forEach(aba => aba.classList.remove("ativa"));
-
-        const alvo = document.getElementById(alvoID);
-        if (alvo) {
-          alvo.classList.add("ativa");
-          window.scrollTo({ top: 0, behavior: "smooth" });
-        }
-      });
-    });
-
-    botoesVoltar.forEach(botao => {
-      botao.addEventListener("click", function () {
-        abas.forEach(aba => aba.classList.remove("ativa"));
-        solucoesSection.classList.remove("oculta");
-        window.scrollTo({ top: solucoesSection.offsetTop, behavior: "smooth" });
-      });
-    });
-  });
-
-  /*rolagem de imagens */
-   document.addEventListener('DOMContentLoaded', () => {
-      const carousel = document.getElementById('carousel');
-      const prevBtn = document.getElementById('prev');
-      const nextBtn = document.getElementById('next');
-      const slides = document.querySelectorAll('.carousel-slide');
-      
-      let slideWidth = slides[0].offsetWidth + 20; // Width + margin
-      let slidesVisible = 6;
-      let currentIndex = 0;
-      
-      function updateSlidesVisible() {
-        if (window.innerWidth > 1200) {
-          slidesVisible = 6;
-        } else if (window.innerWidth > 992) {
-          slidesVisible = 4;
-        } else if (window.innerWidth > 768) {
-          slidesVisible = 3;
-        } else if (window.innerWidth > 480) {
-          slidesVisible = 2;
-        } else {
-          slidesVisible = 1;
-        }
-        
-        slideWidth = slides[0].offsetWidth + 20; // Recalculate slide width
-      }
-      
-      function slide(direction) {
-        updateSlidesVisible();
-        
-        if (direction === 'next') {
-          currentIndex++;
-          if (currentIndex > slides.length - slidesVisible) {
-            currentIndex = 0;
-          }
-        } else {
-          currentIndex--;
-          if (currentIndex < 0) {
-            currentIndex = slides.length - slidesVisible;
-          }
-        }
-        
-        carousel.scrollLeft = currentIndex * slideWidth;
-      }
-      
-      prevBtn.addEventListener('click', () => slide('prev'));
-      nextBtn.addEventListener('click', () => slide('next'));
-      
-      // Update on resize
-      window.addEventListener('resize', updateSlidesVisible);
-      
-      // Initial setup
-      updateSlidesVisible();
-    });
