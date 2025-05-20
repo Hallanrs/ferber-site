@@ -63,42 +63,43 @@
       
       <div class="quem-confia-title"><h2>Quem confia em nós:</h2></div>
 
-      <div class="carousel-container">
+        <div class="carousel-container">
+        
+        <button class="carousel-arrow prev" id="prev">&#10094;</button>
+        <div class="carousel" id="carousel">
+          <!-- Sample logos, replace with your own -->
+          <div class="carousel-slide">
+            <img src="assets/atena.jpg" alt="SAMAE" />
+          </div>
+          <div class="carousel-slide">
+            <img src="assets/Açopeças (1).jpeg" alt="CEMIG" />
+          </div>
+          <div class="carousel-slide">
+            <img src="assets/kaigen.jpeg" alt="SABESP" />
+          </div>
+          <div class="carousel-slide">
+            <img src="assets/logoEstelar.webp" alt="CPFL Energia" />
+          </div>
+          <div class="carousel-slide">
+            <img src="assets/inovatec.jpeg" alt="CHESF" />
+          </div>
+          <div class="carousel-slide">
+            <img src="assets/menegoti.jpeg" alt="Eletrobras" />
+          </div>
+          <div class="carousel-slide">
+            <img src="assets/weg.jpeg" alt="Logo 7" />
+          </div>
+          <div class="carousel-slide">
+            <img src="" alt="Logo 8" />
+          </div>
+          <div class="carousel-slide">
+            <img src="/api/placeholder/200/100" alt="Logo 9" />
+          </div>
+        </div>
        
-       <button class="carousel-arrow prev" id="prev">&#10094;</button>
-       <div class="carousel" id="carousel">
-        <!-- Sample logos, replace with your own -->
-        <div class="carousel-slide">
-          <img src="assets/atena.jpg" alt="SAMAE" />
+          <button class="carousel-arrow next" id="next">&#10095;</button>
         </div>
-        <div class="carousel-slide">
-          <img src="assets/Açopeças (1).jpeg" alt="CEMIG" />
-        </div>
-        <div class="carousel-slide">
-          <img src="assets/kaigen.jpeg" alt="SABESP" />
-        </div>
-        <div class="carousel-slide">
-          <img src="assets/logoEstelar.webp" alt="CPFL Energia" />
-        </div>
-        <div class="carousel-slide">
-          <img src="assets/inovatec.jpeg" alt="CHESF" />
-        </div>
-        <div class="carousel-slide">
-          <img src="assets/menegoti.jpeg" alt="Eletrobras" />
-        </div>
-        <div class="carousel-slide">
-          <img src="assets/weg.jpeg" alt="Logo 7" />
-        </div>
-        <div class="carousel-slide">
-          <img src="assets/atena.jpg" alt="Logo 8" />
-        </div>
-        <div class="carousel-slide">
-          <img src="/api/placeholder/200/100" alt="Logo 9" />
-        </div>
-       </div>
-        <button class="carousel-arrow next" id="next">&#10095;</button>
-       </div>
-     </div>
+      </div>
 
       
     </section>
@@ -265,7 +266,7 @@
       </ul>
     </div>
     <div class="imagem">
-      <img src="img/paineis.jpg" alt="Painel elétrico industrial">
+      <img src="assets/paineisEletricos.jpeg" alt="Painel elétrico industrial">
     </div>
   </div>
     <div class="service-cards">
@@ -306,7 +307,7 @@
       </ul>
     </div>
     <div class="imagem">
-      <img src="img/testes.jpg" alt="Técnico realizando testes elétricos">
+      <img src="assets/inspeçaoTeste2.jpeg" alt="Técnico realizando testes elétricos">
     </div>
   </div>
     <div class="service-cards">
@@ -349,7 +350,7 @@
       </ul>
     </div>
     <div class="imagem">
-      <img src="img/engenharia.jpg" alt="Engenheiro com planta elétrica">
+      <img src="assets/Engenharia 2.jpeg "alt="Engenheiro com planta elétrica">
     </div>
   </div>
     <div class="service-cards">
@@ -391,7 +392,7 @@
       </ul>
     </div>
     <div class="imagem">
-      <img src="img/comissionamento.jpg" alt="Técnico em comissionamento">
+      <img src="assets/comissionamento 2.jpeg" alt="Técnico em comissionamento">
     </div>
   </div>
     <div class="service-cards">
@@ -433,7 +434,7 @@
       </ul>
     </div>
     <div class="imagem">
-      <img src="img/retrofit.jpg" alt="Painel retrofitado">
+      <img src="assets/retrofit 2.jpeg" alt="Painel retrofitado">
     </div>
   </div>
     <div class="service-cards">
@@ -555,22 +556,22 @@
           <li><strong>Endereço:</strong> Rua da Automação, 123 - SP</li>
         </ul>
         
-        <form class="contato-form">
+        <form class="contato-form" id="form-contato">
           <div class="form-group">
             <label for="nome">Nome:</label>
-            <input type="text" id="nome" class="form-control" placeholder="Seu nome completo">
+            <input type="text" id="nome" name="nome" class="form-control" placeholder="Seu nome completo">
           </div>
-          
+
           <div class="form-group">
             <label for="email">Email:</label>
-            <input type="email" id="email" class="form-control" placeholder="Seu email de contato">
+            <input type="email" id="email" name="email" class="form-control" placeholder="Seu email de contato">
           </div>
-          
+
           <div class="form-group">
             <label for="mensagem">Mensagem:</label>
-            <textarea id="mensagem" class="form-control" placeholder="Escreva sua mensagem"></textarea>
+            <textarea id="mensagem" name="mensagem" class="form-control" placeholder="Escreva sua mensagem"></textarea>
           </div>
-          
+
           <button type="submit" class="btn-enviar">Enviar Mensagem</button>
         </form>
         
@@ -603,11 +604,11 @@
                 </label>
               </div>
             </div>
-      </div>
+       </div>
     </section>
   </main>
   
-  <a href="https://wa.me/5599999999999" 
+  <a href="https://wa.me/554799239994" 
      class="whatsapp-float" 
      target="_blank" 
      aria-label="Converse no WhatsApp">
@@ -629,12 +630,12 @@
     <div class="footer-links">
       <h4>Empresa</h4>
       <ul>
-        <li><a href="#sobre">Sobre</a></li>
-        <li><a href="#solucoes">Soluções</a></li>
-        <li><a href="#certificacoes">Certificações</a></li>
-        <li><a href="#contato">Contato</a></li>
+        <li><a href="#sobre" id="footer-sobre">Sobre</a></li>
+        <li><a href="#solucoes" id="footer-solucoes">Soluções</a></li>
+        <li><a href="#certificacoes" id="footer-certificacoes">Certificações</a></li>
+        <li><a href="#contato" id="footer-contato">Contato</a></li>
       </ul>
-    </div>
+   </div>
 
     <div class="footer-contato">
       <h4>Contato</h4>

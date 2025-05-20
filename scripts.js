@@ -1,8 +1,6 @@
-// Aguarda o carregamento completo do DOM
-// Define comportamentos para navegação, botões e interações gerais
 document.addEventListener("DOMContentLoaded", function () {
-  const navItems = document.querySelectorAll(".nav-item"); // Itens do menu superior
-  const sections = document.querySelectorAll("section");   // Todas as seções principais
+  const navItems = document.querySelectorAll(".nav-item");
+  const sections = document.querySelectorAll("section");
   const botoesSaibaMais = document.querySelectorAll(".btn-saiba-mais");
   const botoesVoltar = document.querySelectorAll(".btn-voltar");
 
@@ -10,48 +8,47 @@ document.addEventListener("DOMContentLoaded", function () {
   navItems.forEach(item => {
     item.addEventListener("click", () => {
       const tab = item.getAttribute("data-tab");
-
-      // Remove classe 'active' de todos os itens do menu
       navItems.forEach(i => i.classList.remove("active"));
       item.classList.add("active");
-
-      // Esconde todas as seções
       sections.forEach(sec => sec.style.display = "none");
 
-      // Exibe a aba principal correspondente
       const targetSection = document.getElementById(tab);
       if (targetSection) {
         targetSection.style.display = "block";
-        window.scrollTo({ top: 0, behavior: "smooth" }); // Volta ao topo da página
+        window.scrollTo({ top: 0, behavior: "smooth" });
       }
 
-      // Oculta todas as abas de soluções detalhadas
       document.querySelectorAll(".detalhe-solucao").forEach(sol => sol.style.display = "none");
     });
   });
 
-  // Ação nos botões "Saiba mais"
+  /*hamburguer menu*/
+  const mobileMenu = document.getElementById('mobile-menu');
+  const listNav = document.getElementById('nav-list');
+
+  mobileMenu.addEventListener('click', () => {
+    listNav.classList.toggle('active');
+    mobileMenu.classList.toggle('open');
+      });
+
+
+  // Botões "Saiba mais"
   botoesSaibaMais.forEach(botao => {
     botao.addEventListener("click", e => {
       e.preventDefault();
       const target = document.querySelector(botao.getAttribute("href"));
-
       if (target) {
-        // Esconde todas as seções
         sections.forEach(sec => sec.style.display = "none");
-        // Exibe a seção da solução específica
         target.style.display = "block";
-        window.scrollTo({ top: 0, behavior: "smooth" }); // Volta ao topo ao abrir solução
+        window.scrollTo({ top: 0, behavior: "smooth" });
       }
     });
   });
 
-  // Ação nos botões "Voltar"
+  // Botões "Voltar"
   botoesVoltar.forEach(botao => {
     botao.addEventListener("click", () => {
-      // Esconde todas as seções
       sections.forEach(sec => sec.style.display = "none");
-      // Exibe a seção principal de soluções
       const solucoesSection = document.getElementById("solucoes");
       if (solucoesSection) {
         solucoesSection.style.display = "block";
@@ -65,12 +62,11 @@ document.addEventListener("DOMContentLoaded", function () {
   const inicio = document.getElementById("inicio");
   if (inicio) inicio.style.display = "block";
 
-  // Botões de navegação entre seções específicas
   const linkSolucoes = document.getElementById("link-solucoes");
   if (linkSolucoes) {
     linkSolucoes.addEventListener("click", (e) => {
       e.preventDefault();
-      document.querySelectorAll("section").forEach(sec => sec.style.display = "none");
+      sections.forEach(sec => sec.style.display = "none");
       const secao = document.getElementById("solucoes");
       if (secao) secao.style.display = "block";
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -81,7 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
   if (linkParcerias) {
     linkParcerias.addEventListener("click", (e) => {
       e.preventDefault();
-      document.querySelectorAll("section").forEach(sec => sec.style.display = "none");
+      sections.forEach(sec => sec.style.display = "none");
       const secao = document.getElementById("parcerias");
       if (secao) secao.style.display = "block";
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -92,73 +88,129 @@ document.addEventListener("DOMContentLoaded", function () {
   if (linkContato) {
     linkContato.addEventListener("click", (e) => {
       e.preventDefault();
-      document.querySelectorAll("section").forEach(sec => sec.style.display = "none");
+      sections.forEach(sec => sec.style.display = "none");
       const secao = document.getElementById("contato");
       if (secao) secao.style.display = "block";
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
   }
 
-  // Upload de arquivo - mostra nome do arquivo escolhido
-  const fileInput = document.querySelector('.file-input');
-  const fileLabel = document.querySelector('.file-input-label');
-  if (fileInput && fileLabel) {
-    fileInput.addEventListener('change', function() {
-      fileLabel.textContent = fileInput.files.length > 0 ? fileInput.files[0].name : 'Escolher arquivo';
-    });
-  }
 
-  // Menu mobile toggle
-  const mobileMenu = document.getElementById("mobile-menu");
-  const navList = document.getElementById("nav-list");
-  if (mobileMenu && navList) {
-    mobileMenu.addEventListener("click", () => {
-      navList.classList.toggle("active");
-      mobileMenu.classList.toggle("active");
-    });
-  }
 
-  // Carrossel de imagens das soluções
-  const carousel = document.getElementById('carousel');
-  const prevBtn = document.getElementById('prev');
-  const nextBtn = document.getElementById('next');
-  const slides = document.querySelectorAll('.carousel-slide');
+  // Carrossel de imagens
+ const carousel = document.getElementById('carousel');
+const prevBtn = document.getElementById('prev');
+const nextBtn = document.getElementById('next');
+const slides = document.querySelectorAll('.carousel-slide');
 
-  if (carousel && prevBtn && nextBtn && slides.length > 0) {
-    let slideWidth = slides[0].offsetWidth + 20;
-    let slidesVisible = 6;
-    let currentIndex = 0;
+if (carousel && prevBtn && nextBtn && slides.length > 0) {
+  let slideWidth = 0;
+  let slidesVisible = 6;
+  let currentIndex = 0;
 
-    function updateSlidesVisible() {
-      if (window.innerWidth > 1200) {
-        slidesVisible = 6;
-      } else if (window.innerWidth > 992) {
-        slidesVisible = 4;
-      } else if (window.innerWidth > 768) {
-        slidesVisible = 3;
-      } else if (window.innerWidth > 480) {
-        slidesVisible = 2;
-      } else {
-        slidesVisible = 1;
-      }
-      slideWidth = slides[0].offsetWidth + 20;
+  function updateSlidesVisible() {
+    if (window.innerWidth > 1200) {
+      slidesVisible = 6;
+    } else if (window.innerWidth > 992) {
+      slidesVisible = 4;
+    } else if (window.innerWidth > 768) {
+      slidesVisible = 3;
+    } else if (window.innerWidth > 480) {
+      slidesVisible = 2;
+    } else {
+      slidesVisible = 1;
     }
 
-    function slide(direction) {
-      updateSlidesVisible();
-      if (direction === 'next') {
-        currentIndex++;
-        if (currentIndex > slides.length - slidesVisible) currentIndex = 0;
-      } else {
-        currentIndex--;
-        if (currentIndex < 0) currentIndex = slides.length - slidesVisible;
-      }
-      carousel.scrollLeft = currentIndex * slideWidth;
-    }
+    const slideStyle = getComputedStyle(slides[0]);
+    const marginRight = parseFloat(slideStyle.marginRight) || 20;
+    slideWidth = slides[0].getBoundingClientRect().width + marginRight;
+  }
 
-    prevBtn.addEventListener('click', () => slide('prev'));
-    nextBtn.addEventListener('click', () => slide('next'));
-    window.addEventListener('resize', updateSlidesVisible);
+  function slide(direction) {
     updateSlidesVisible();
+    const maxIndex = Math.max(slides.length - slidesVisible, 0);
+
+    if (direction === 'next') {
+      currentIndex = (currentIndex + 1) > maxIndex ? 0 : currentIndex + 1;
+    } else {
+      currentIndex = (currentIndex - 1) < 0 ? maxIndex : currentIndex - 1;
+    }
+
+    carousel.scrollTo({
+      left: currentIndex * slideWidth,
+      behavior: 'smooth'
+    });
   }
+
+  prevBtn.addEventListener('click', () => slide('prev'));
+  nextBtn.addEventListener('click', () => slide('next'));
+  window.addEventListener('resize', updateSlidesVisible);
+  updateSlidesVisible();
+}
+
+
+/*footer*/
+  // Lógica para os links do footer (sistema de abas)
+    const footerLinks = [
+    { linkId: "footer-sobre", sectionId: "sobre" },
+    { linkId: "footer-solucoes", sectionId: "solucoes" },
+    { linkId: "footer-certificacoes", sectionId: "certificacoes" },
+    { linkId: "footer-contato", sectionId: "contato" }
+  ];
+
+  footerLinks.forEach(({ linkId, sectionId }) => {
+    const link = document.getElementById(linkId);
+    const targetSection = document.getElementById(sectionId);
+
+    if (link && targetSection) {
+      link.addEventListener("click", function (e) {
+        e.preventDefault();
+
+        // Esconde todas as seções
+        sections.forEach(sec => sec.style.display = "none");
+
+        // Mostra a seção de destino
+        targetSection.style.display = "block";
+
+        // Rola suavemente até o topo da página
+        window.scrollTo({ top: 0, behavior: "smooth" });
+
+        // Remove active dos itens de navegação
+        navItems.forEach(i => i.classList.remove("active"));
+
+        // Marca como active se tiver item correspondente
+        navItems.forEach(i => {
+          if (i.getAttribute("data-tab") === sectionId) {
+            i.classList.add("active");
+          }
+        });
+      });
+    }
+  });
+
 });
+
+/*Email JS para envio de mesnagem*/
+// Inicializa a biblioteca do EmailJS
+emailjs.init("swkcuBg_POf9M-t-S"); // Substitua pelo seu Public Key
+
+// Adiciona o listener para o formulário
+document.getElementById("form-contato").addEventListener("submit", function(e) {
+  e.preventDefault(); // Impede o envio padrão do formulário
+
+  emailjs.sendForm("service_we7swd4", "template_fy04dm7", this)
+    .then(function(response) {
+      alert("✅ Mensagem enviada com sucesso!");
+      console.log("SUCCESS!", response.status, response.text);
+    }, function(error) {
+      alert("❌ Ocorreu um erro ao enviar a mensagem. Tente novamente.");
+      console.error("FAILED...", error);
+    });
+
+  this.reset(); // Limpa o formulário
+});
+
+
+
+
+
